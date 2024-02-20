@@ -48,3 +48,5 @@ To install nginx, run the following commands:
 
 	sudo apt update
 	sudo apt install nginx
+
+https://docs.docker.com/compose/compose-application-model/
