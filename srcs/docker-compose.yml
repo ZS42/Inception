@@ -1,0 +1,83 @@
+version: '3'
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: requirements/nginx/Dockerfile
+    depends_on:
+      - wordpress
+    ports:
+      - "443:443"
+    networks:
+      - inception
+    volumes:
+      - wp-volume:/var/www/
+    restart: on-failure
+
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    build:
+      context: .
+      dockerfile: requirements/mariadb/Dockerfile
+      args:
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_PASS: ${DB_PASS}
+        DB_ROOT: ${DB_ROOT}
+    networks:
+      - inception
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-volume:/var/lib/mysql
+    restart: on-failure
+  
+  wordpress:
+    image: wordpress
+    container_name: wordpress
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: requirements/wordpress/Dockerfile
+      args:
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_PASS: ${DB_PASS}
+        DOMAIN_NAME: ${DOMAIN_NAME}
+        WPADUSER: ${WPADUSER}
+        WPUSER1: ${WPUSER1}
+        WPADPASS: ${WPADPASS}
+        WPUSER1PASS: ${WPUSER1PASS}
+    depends_on:
+      - mariadb
+    restart: on-failure
+    networks:
+      - inception
+    volumes:
+      - wp-volume:/var/www/
+  
+volumes:
+  wp-volume:
+    name: wp-volume
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/data/wordpress
+
+  db-volume:
+    name: db-volume
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/data/mariadb
+  portainer_data:
+    driver: local
+    name: portainer_data
+
+networks:
+  inception:
+    driver: bridge
