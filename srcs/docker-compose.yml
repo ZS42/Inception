@@ -1,8 +1,12 @@
+#Compose plugin vs. standalone CLI: The Docker Compose functionality can be used in two ways:
+#As a Python-based standalone CLI (docker-compose).
+#As a Go plugin integrated into Docker Desktop (docker compose).
+#this is the version of docker compose check with docker-compose --version
 version: '3'
 services:
   nginx:
-    image: nginx
     container_name: nginx
+    image: nginx
     build:
       context: .
       dockerfile: requirements/nginx/Dockerfile
@@ -29,8 +33,8 @@ services:
         DB_ROOT: ${DB_ROOT}
     networks:
       - inception
-    ports:
-      - "3306:3306"
+    expose:
+      - "3306"
     volumes:
       - db-volume:/var/lib/mysql
     restart: on-failure
@@ -54,6 +58,8 @@ services:
         WPUSER1PASS: ${WPUSER1PASS}
     depends_on:
       - mariadb
+    expose:
+      - "9000"
     restart: on-failure
     networks:
       - inception
@@ -74,9 +80,6 @@ volumes:
       o: bind
       type: none
       device: /home/${USER}/data/mariadb
-  portainer_data:
-    driver: local
-    name: portainer_data
 
 networks:
   inception:
