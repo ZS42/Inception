@@ -1,4 +1,46 @@
 # Inception
+FOR ALPINE
+get virtualbox from managed software centre
+
+download alpine for i5 (x86_64)
+chose new
+put in name as inception
+type linux
+version linux 2.6 64 bit
+next
+base memory 4096
+cores 4 next
+disk size 4GB next
+finish
+go to setting ->storage ->controller IDE ->optical drive ->your alpine download
+settings->display->300%
+press start(green arrow)
+will ask you to login->root -> no need for password initially
+setup-alpine
+
+Questions asked by setup-alpine
+
+Example setup-alpine session
+The setup-alpine script offers the following configuration options:
+
+Keyboard Layout (Local keyboard language and usage mode, e.g. us and variant of us-nodeadkeys.)
+Hostname (The name for the computer.)
+Network (For example, automatic IP address discovery with the "DHCP" protocol.)
+DNS Servers (Domain Name Servers to query. If unsure, leave DNS domain name blank and using 9.9.9.9 2620:fe::fe for DNS is typically adequate.)
+Root password (the password used to login to the root account)
+Timezone (Optionally display times/dates in your local time zone)
+HTTP/FTP Proxy (Proxy server to use for accessing the web/ftp. Use "none" for direct connections to websites and FTP servers.)
+Mirror (From where to download packages. Choose the organization you trust giving your usage patterns to.)
+<!-- Contents of /etc/apk/repositories
+#/media/cdrom/apks
+http://dl-cdn.alpinelinux.org/alpine/v3.19/main
+http://dl-cdn.alpinelinux.org/alpine/v3.19/commun -->
+Setup a user (Setting up a regular user account)
+SSH (Secure SHell remote access server. "OpenSSH" is part of the default install image. Use "none" to disable remote login, e.g. on laptops.)
+sshkey->?
+Disk Mode (Select between diskless (disk="none"), "data" or "sys", as described above.)
+sda ->?
+
 
 https://www.analyticsvidhya.com/blog/2022/06/writing-dockerfile-is-simple/
 
@@ -69,3 +111,5 @@ To install nginx, run the following commands:
 	sudo apt install nginx
 
 https://docs.docker.com/compose/compose-application-model/
+
+https://wiki.alpinelinux.org/wiki/Alpine_Linux:Overview
