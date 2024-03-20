@@ -1,8 +1,8 @@
 #Compose plugin vs. standalone CLI: The Docker Compose functionality can be used in two ways:
 #As a Python-based standalone CLI (docker-compose).
 #As a Go plugin integrated into Docker Desktop (docker compose).
-#this is the version of docker compose check with docker-compose --version
-version: '2.13.0'
+#this is the version of docker compose check with (docker-compose --version did not work) docker -version and find compatible docker-compose online
+version: '3.8'
 services:
   nginx:
     container_name: nginx
