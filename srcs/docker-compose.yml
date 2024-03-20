@@ -2,6 +2,11 @@
 #As a Python-based standalone CLI (docker-compose).
 #As a Go plugin integrated into Docker Desktop (docker compose).
 #this is the version of docker compose check with docker-compose --version
+
+#/var/www/ is base directory for website
+
+#/var/lib/mysql is the traditional and recommended location for storing MySQL data directories on 
+#   various Linux distributions, including the ones typically used for Docker containers.
 version: '3'
 services:
   nginx:
@@ -68,13 +73,20 @@ services:
   
 volumes:
   wp-volume:
+    #wp-volume: This volume mounts the directory /home/${USER}/data/wordpress on the host machine to the /var/www/ directory inside the container. 
+    #  This allows the nginx and wordpress services to access website files stored on the host.
     name: wp-volume
     driver_opts:
+      #bind: This keyword indicates that a host directory is being mounted. o: This option specifies the specific bind mount options
       o: bind
+      #type: none: This option tells Docker not to create a new volume on the host machine.
       type: none
+      #This section defines the host directory path that will be mounted to the specified location within the container for each volume:
       device: /home/${USER}/data/wordpress
 
   db-volume:
+    #db-volume: This volume mounts the directory /home/${USER}/data/mariadb on the host machine to the /var/lib/mysql directory inside the 
+    #  container. This ensures the database data persists even if the mariadb container is recreated.
     name: db-volume
     driver_opts:
       o: bind
@@ -83,4 +95,7 @@ volumes:
 
 networks:
   inception:
+    #driver: bridge: This specifies the network driver used to create the virtual network. In this case, the bridge driver is used. This driver
+    # creates a standard virtual network that allows the containers connected to it to communicate with each other as well as with other 
+    # hosts on the same physical network.
     driver: bridge
